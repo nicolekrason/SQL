@@ -135,3 +135,35 @@ AND employees.Title = 'Sales Support Agent'
 GROUP BY employees.FirstName
 ORDER BY ROUND(SUM(invoices.Total), 2) DESC
 LIMIT 1;
+
+#15 Which media type (format) is used the most in track purchases?
+
+SELECT media_types.Name, COUNT(invoice_items.TrackId) AS PurchaseCount
+FROM chinook.media_types
+
+JOIN chinook.tracks
+ON media_types.MediaTypeId = tracks.MediaTypeId
+
+JOIN chinook.invoice_items
+ON tracks.TrackId = invoice_items.TrackId
+
+GROUP BY media_types.Name
+ORDER BY PurchaseCount DESC
+LIMIT 1;
+
+#16 Which customer worked with which employee the most?
+
+SELECT customers.LastName ||', '|| customers.FirstName AS Customer, 
+employees.LastName ||', '|| employees.FirstName AS Employee,
+COUNT(invoices.InvoiceId) AS InteractionCount
+FROM chinook.customers
+
+JOIN chinook.employees
+ON customers.SupportRepId = employees.EmployeeId
+
+JOIN chinook.invoices
+ON customers.CustomerId = invoices.CustomerId
+
+GROUP BY Employee
+ORDER BY InteractionCount DESC
+LIMIT 1;
