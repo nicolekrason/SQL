@@ -51,3 +51,28 @@ SELECT item_name, stock_quantity
 FROM superstore
 ORDER BY stock_quantity DESC
 LIMIT 1;
+
+# Write a SQL query that orders the items by price.
+
+SELECT item_name
+FROM superstore
+ORDER BY price;
+
+# Write your own SQL query that will show a statistic about the item prices, like a sum, average, minimum, maximum, or count.
+# What item has the most in stock?
+
+SELECT MAX(stock_quantity), item_name
+FROM superstore;
+
+# Write your own SQL query that will show a statistic about the price for items in the category of "Kitchen Supplies".
+
+SELECT item_name, category, price
+FROM superstore
+WHERE category = "Furnishings"
+ORDER BY price desc;
+
+# What is the average rating for electronics sold?
+
+SELECT item_name, category, average_rating
+FROM superstore
+WHERE category = "Electronics";
