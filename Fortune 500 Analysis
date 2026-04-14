@@ -106,3 +106,66 @@ CASE
 END AS "Paid time off friendliness"
 FROM fortune_companies
 ORDER BY "Paid time off friendliness";
+
+-- Which companies have at least 20 days paid time off and 6 weeks maternity leave weeks?
+
+SELECT company_name, paid_time_off_days AS PTO, maternity_leave_weeks
+FROM fortune_companies
+WHERE PTO >= 20
+AND maternity_leave_weeks >= 6
+ORDER BY PTO DESC;
+
+-- What is the total time off in each company between PTO and maternity leave?
+
+SELECT company_name, paid_time_off_days + maternity_leave_weeks AS total_time_off
+FROM fortune_companies;
+
+-- Which companies have healthcare benefits and which companies don't?
+
+SELECT company_name, 
+CASE
+WHEN healthcare_benefits = 1 THEN "Yes"
+WHEN healthcare_benefits = 0 THEN "No"
+END AS healthcare_benefits
+FROM fortune_companies;
+
+-- Which company has more than 100,000 employees?
+
+SELECT company_name, SUM(employees)
+FROM fortune_companies
+GROUP BY company_name
+HAVING SUM(employees) > 100000;
+
+-- Which companies have at least 20 days paid time off and 6 weeks maternity leave weeks?
+
+SELECT company_name, paid_time_off_days AS PTO, maternity_leave_weeks
+FROM fortune_companies
+WHERE PTO >= 20
+AND maternity_leave_weeks >= 6
+ORDER BY PTO DESC;
+
+-- What is the total time off in each company between PTO and maternity leave?
+
+SELECT company_name, paid_time_off_days + maternity_leave_weeks AS total_time_off
+FROM fortune_companies;
+
+-- Which companies have healthcare benefits and which companies don't?
+
+SELECT company_name, 
+CASE
+WHEN healthcare_benefits = 1 THEN "Yes"
+WHEN healthcare_benefits = 0 THEN "No"
+END AS healthcare_benefits
+FROM fortune_companies;
+
+-- Which company has more than 100,000 employees?
+
+SELECT company_name, SUM(employees)
+FROM fortune_companies
+GROUP BY company_name
+HAVING SUM(employees) > 100000;
+
+-- Which indsutry has the most employees?
+
+SELECT industry, MAX(employees)
+FROM fortune_companies;
