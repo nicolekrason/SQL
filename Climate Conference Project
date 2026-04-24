@@ -1,0 +1,57 @@
+Climate Conference Project
+Database: https://www.db-fiddle.com/f/pxMci1sLL945KHKYvpe9W6/1
+
+LEFT JOIN: Display the first name, last name, and if they have a dinner reservation, for all VIPs
+
+SELECT vips.last_name, vips.first_name, reservations.dinner_rsvp
+FROM vips
+LEFT JOIN reservations
+ON vips.member_id = reservations.member_id
+AND reservations.dinner_rsvp = 1
+ORDER BY vips.last_name;
+
+INNER JOIN: Display the VIPs who attended a workshop
+
+SELECT vips.last_name, vips.first_name, events.event_type
+FROM vips
+INNER JOIN events
+ON vips.event = events.event_id
+WHERE events.event_type = 'Workshop'
+ORDER BY vips.last_name;
+
+MULTIPLE JOINS: Which VIPs have an event and a dinner reservation?
+
+SELECT vips.last_name, vips.first_name, events.event_name, reservations.dinner_rsvp
+FROM vips
+INNER JOIN events
+ON vips.event = events.event_id
+INNER JOIN reservations
+ON vips.member_id = reservations.member_id
+WHERE reservations.dinner_rsvp = 1
+ORDER BY vips.last_name;
+
+SELF JOIN: Using the vips table, make a list of all VIPs who provide feedback to another VIP. Include the member_id, VIP’s name, and the name of the VIP receiving the feedback. Order the results by the member_id of the VIP giving feedback in ascending order
+
+SELECT A.member_id, A.first_name AS giver_first_name, B.first_name AS receiver_first_name
+FROM vips A
+INNER JOIN vips B
+ON A.provides_feedback_to = B.member_id
+ORDER BY A.member_id ASC;
+
+SUBQUERY: Write a query that selects the member IDs of all VIPs who are attending workshop events
+
+SELECT member_id
+FROM vips
+WHERE event IN(
+SELECT event_id
+FROM events
+WHERE event_type = 'Workshop');
+
+INNER JOIN: Display the VIPs who have a hotel reservation
+
+SELECT vips.last_name, vips.first_name
+FROM vips
+INNER JOIN reservations
+ON vips.member_id = reservations.member_id
+WHERE reservations.hotel = 1
+ORDER BY vips.last_name ASC;
