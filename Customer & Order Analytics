@@ -143,6 +143,18 @@ HAVING AVG(price) > 1000;
 
 -- You’ve been given the following results from the MaySales table. Can you reverse engineer a SQL query that returns these results?
 
+location	orderID
+818 Wilson St, Los Angeles, CA 90001	194305
+2 Center St, Austin, TX 73301	194315
+960 Park St, San Francisco, CA 94016	194325
+53 Ridge St, Portland, OR 97035	194335
+734 Hickory St, New York City, NY 10001	194345
+196 Cherry St, Portland, OR 97035	194355
+924 13th St, Los Angeles, CA 90001	194365
+602 Washington St, New York City, NY 10001	194375
+399 12th St, San Francisco, CA 94016	194385
+434 Pine St, Seattle, WA 98101	194395
+
 SELECT location, orderID
 FROM BIT_DB.MaySales
 WHERE orderID LIKE '1943_5'
