@@ -1,0 +1,107 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Then I inserted the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL. 
+
+-- What is the most popular song?
+
+SELECT track_name, artist_name, popularity
+FROM BIT_DB.Spotifydata
+ORDER BY popularity DESC
+LIMIT 1;
+
+-- What is the shortest song?
+
+SELECT track_name AS Song, duration_ms AS 'Shortest Song'
+FROM BIT_DB.Spotifydata
+ORDER BY duration_ms ASC
+LIMIT 1;
+
+-- List all song by Olivia Rodrigo in order of danceability
+
+SELECT track_name
+FROM BIT_DB.Spotifydata
+WHERE artist_name = 'Olivia Rodrigo'
+ORDER BY danceability;
+
+-- List all songs with a popularity above 90 and energy above 0.7
+
+SELECT track_name, artist_name
+FROM BIT_DB.Spotifydata
+WHERE popularity > 90
+AND energy > 0.7;
+
+-- Find all pairs of tracks by the same artist where one track is more popular than the other. 
+-- Show the artist name, the most popular track, and the least popular track.
+
+SELECT A.artist_name,
+A.track_name AS 'Least Popular', A.popularity AS 'Lowest Rating',
+B.track_name AS 'Most Popular', B.popularity AS 'Highest Rating'
+FROM BIT_DB.Spotifydata A
+LEFT JOIN BIT_DB.Spotifydata B
+ON A.artist_name = B.artist_name
+WHERE A.popularity < B.popularity
+ORDER BY B.popularity DESC, A.popularity ASC;
+
+-- Categorize the song energy levels by low, medium or high
+
+SELECT track_name,
+CASE
+    WHEN energy BETWEEN 0.31 AND 0.49 THEN "Low"
+    WHEN energy BETWEEN 0.51 AND 0.69 THEN "Medium"
+ELSE "High"
+END AS energy_levels
+FROM BIT_DB.Spotifydata
+ORDER BY track_name;
+
+-- What is the total song duration for each artist combined in milo seconds?
+
+SELECT artist_name, SUM(duration_ms) AS 'Combined Song Length'
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name;
+
+-- How many songs does Justin Bieber have?
+
+SELECT COUNT(track_name) AS 'Songs'
+FROM BIT_DB.Spotifydata
+WHERE artist_name = 'Justin Bieber'
+
+-- Which artists have more than two songs?
+
+SELECT artist_name, COUNT(track_name) AS 'Number of Songs'
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING COUNT(track_name) > 2;
+
+-- What songs are above the average popularity?
+
+SELECT track_name
+FROM BIT_DB.Spotifydata
+WHERE popularity >
+(SELECT AVG(popularity)
+FROM BIT_DB.Spotifydata);
