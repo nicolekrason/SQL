@@ -23,7 +23,7 @@ ORDER BY customers.CustomerId;
 
 -- Show the Employees who are Sales Agents.
 
-SELECT FirstName, City
+SELECT FirstName || ' ' || LastName AS 'Sales Support Agents', City
 FROM chinook.employees
 WHERE Title = 'Sales Support Agent';
 
