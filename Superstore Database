@@ -92,13 +92,14 @@ ORDER BY MAX(price) desc;
 
 # Write your own SQL query that will show a statistic about the price for items in the category of "Kitchen Supplies".
 
-SELECT category, item_name, MIN(price)
+SELECT item_name, MIN(price)
 FROM superstore
-WHERE category = 'Kitchen Supplies';
+WHERE category = 'Kitchen Supplies'
+GROUP BY item_name;
 
 # How many Memory Foam Mattress' are there?
 
-SELECT item_name, COUNT(stock_quantity)
+SELECT item_name, SELECT(stock_quantity)
 FROM superstore
 WHERE item_name = 'Memory Foam Mattress'
 GROUP BY item_name;
